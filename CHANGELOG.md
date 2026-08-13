@@ -2,7 +2,20 @@
 
 All notable changes to Too Many Cooks will be documented here.
 
-## [1.0.0] - 2026-08-13
+## [12.002] - 2026-08-13
+
+### Added
+- Support for the Acceptable Apprentice cooking event.
+- Added Fish Guts, Scales, and Pearl Dust ingredient highlighting.
+- Added support for encounters with different numbers of ingredients and required steps.
+
+### Changed
+- Refactored Too Many Cooks into a modular structure.
+- Cooking events now have separate encounter files for easier maintenance and expansion.
+- Ingredient panels now automatically resize based on the number of available ingredients.
+- Updated release packaging to support the new modular structure.
+
+## [12.001] - 2026-08-13
 
 ### Added
 
