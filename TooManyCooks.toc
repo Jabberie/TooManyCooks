@@ -1,0 +1,7 @@
+## Interface: 120100
+## Title: Too Many Cooks
+## Notes: Highlights the ingredient requested by the Witherbark Cook during Suspicious Stew.
+## Author: Jabberie
+## Version: 1.0.0
+
+TooManyCooks.lua

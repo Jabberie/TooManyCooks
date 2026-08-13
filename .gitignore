@@ -1,0 +1,21 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# WoW development / packaging
+*.zip
+.releases/
+release/
+dist/
+
+# Temporary / backup files
+*.tmp
+*.bak
+*~
