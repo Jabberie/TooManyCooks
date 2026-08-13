@@ -3,7 +3,7 @@ name: Build GitHub Release
 on:
   push:
     tags:
-      - '*_Release'
+      - '*_release'
 
 permissions:
   contents: write
