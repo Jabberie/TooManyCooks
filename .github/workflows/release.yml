@@ -1,6 +1,10 @@
 name: Build GitHub Release
 
 on:
+  # Allows us to test the workflow manually from GitHub Actions
+  workflow_dispatch:
+
+  # Automatically creates a release when a *_release tag is pushed
   push:
     tags:
       - '*_release'
@@ -13,10 +17,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # -------------------------------------------------------
+      # Checkout the tagged repository
+      # -------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # -------------------------------------------------------
+      # Determine version
+      # -------------------------------------------------------
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            VERSION="${GITHUB_REF_NAME}"
+          else
+            VERSION="development"
+          fi
+
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Building TooManyCooks version: ${VERSION}"
+
+      # -------------------------------------------------------
+      # Build proper WoW addon directory
+      # -------------------------------------------------------
       - name: Build addon folder
+        shell: bash
         run: |
           mkdir -p build/TooManyCooks
 
@@ -24,19 +51,52 @@ jobs:
           cp TooManyCooks.toc build/TooManyCooks/
           cp LICENSE build/TooManyCooks/
 
-      - name: Replace project version
+      # -------------------------------------------------------
+      # Replace CurseForge project-version token in the
+      # packaged TOC. The repository copy is not modified.
+      # -------------------------------------------------------
+      - name: Set addon version
+        shell: bash
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          sed -i "s/@project-version@/${TAG}/g" build/TooManyCooks/TooManyCooks.toc
+          sed -i \
+            "s/@project-version@/${{ steps.version.outputs.version }}/g" \
+            build/TooManyCooks/TooManyCooks.toc
 
-      - name: Create zip
+      # -------------------------------------------------------
+      # Create:
+      #
+      # TooManyCooks.zip
+      # └── TooManyCooks/
+      #     ├── TooManyCooks.lua
+      #     ├── TooManyCooks.toc
+      #     └── LICENSE
+      # -------------------------------------------------------
+      - name: Create addon zip
         working-directory: build
+        shell: bash
         run: |
           zip -r ../TooManyCooks.zip TooManyCooks
 
+      # -------------------------------------------------------
+      # Manual runs are for testing the build only.
+      # Upload the resulting zip as a workflow artifact.
+      # -------------------------------------------------------
+      - name: Upload test build
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: TooManyCooks
+          path: TooManyCooks.zip
+          if-no-files-found: error
+
+      # -------------------------------------------------------
+      # Tagged runs create the actual GitHub Release.
+      # -------------------------------------------------------
       - name: Create GitHub Release
+        if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name }}
+          name: Too Many Cooks ${{ github.ref_name }}
           files: TooManyCooks.zip
           generate_release_notes: true
-          name: Too Many Cooks ${{ github.ref_name }}
