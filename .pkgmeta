@@ -1,0 +1,10 @@
+package-as: TooManyCooks
+
+ignore:
+  - .github
+  - .gitignore
+  - .gitattributes
+  - README.md
+
+manual-changelog: CHANGELOG.md
+license-output: LICENSE
