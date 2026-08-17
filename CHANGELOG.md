@@ -2,6 +2,27 @@
 
 All notable changes to Too Many Cooks will be documented here.
 
+## [12.003] - 2026-08-17
+
+### Added
+- Support for the **Artificing Aggression** event in Voidstorm.
+- Added Decimus encounter detection.
+- Added ingredient highlighting for:
+  - Void Brazier
+  - Behemoth Bone Dust
+  - Crystallized Void
+  - Void Repository
+- Added support for Voidstorm (Map ID 2405).
+- Added automatic completion detection for Artificing Aggression.
+
+### Changed
+- Expanded Too Many Cooks to support encounters across multiple zones.
+- Artificing Aggression uses its physical ingredient layout:
+  - Void Brazier
+  - Behemoth Bone Dust
+  - Crystallized Void
+  - Void Repository
+
 ## [12.002] - 2026-08-13
 
 ### Added

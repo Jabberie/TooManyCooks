@@ -1,6 +1,6 @@
 ## Interface: 120100
 ## Title: Too Many Cooks
-## Notes: Highlights ingredients requested during supported cooking events.
+## Notes: Highlights the correct object or ingredient during supported instruction-based events.
 ## Author: Jabberie
 ## Version: @project-version@
 
@@ -8,4 +8,5 @@ Encounters.lua
 UI.lua
 SuspiciousStew.lua
 AcceptableApprentice.lua
+ArtificingAggression.lua
 Core.lua
